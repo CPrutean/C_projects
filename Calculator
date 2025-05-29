@@ -1,0 +1,133 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdlib.h>
+
+#define bool char
+#define true 1
+#define false 0
+
+static char* raw_string = NULL;
+
+//Initialize character array with the index's showing the precedences each operation by index
+const char val_symb[6] = {'(', ')', '^', 'x', '*', '/', '+', '-'};
+const char val_nums[10] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+
+typedef struct {
+    char oper;
+    float num1;
+    float num2;
+    operation op1;
+    operation op2;
+} operation;
+
+//Pass an operation with only num1 value set and the operator as '!'
+int factorial(operation op) {
+    bool check_whole_num = true;
+    if ((int)op.num1-op.num1 != 0) {
+        printf("\nDont pass decimal numbers to the factorial function there is no framework for integrals yet");
+        exit(0);
+    }
+
+
+
+    if (op.oper != '!') {
+        printf("\nInvalid operation passed to factorial func");
+        return -1;
+    }
+    
+    int i;
+    int num = op.num1;
+    for (i = op.num1-1; i > 0; i--) {
+        num *= i;
+    }
+    return num;
+}
+
+int exp(operation op) {
+    if (op.oper != '^') {
+        printf("\nInvalid operation passed to exp function");
+        return -1;
+    }
+
+    if ((int)op.num2 - op.num2 != 0) {
+        printf("\nDont pass non integers into the second argument calculator is incomplete.");
+    }
+
+    int i;
+    int num = op.num1;
+    for (i = 0; i < op.num2; i++) {
+        num *= op.num1;
+    }
+    return num;
+}
+
+int paren_parser(char* string, int index1, int index2) {
+
+}
+bool is_oper(char c) {
+    return (int)c == 42 || (int)c == 47 || (int)c == 94 || (int)c == 120;
+}
+
+bool is_num(char c) {
+    return (int) c >= 49 && (int) c <= 57;
+}
+
+bool check_errors(char* string) {
+    int i = 0;
+    int open_paren = 0;
+    int closed_paren = 0;
+    int currspaces = 0;
+
+    while (*(string+i) != '\0') {
+        if (*(string+i) == ' ') {
+            currspaces++;
+            continue;
+        }
+
+        switch(*(string+i)) {
+            case '(':
+                open_paren++;
+                break;
+            case ')':
+                closed_paren++;
+                break;
+            default:
+               
+                break;         
+        }
+        
+    }
+
+    if (open_paren != closed_paren) {
+        printf("\n Unclosed/Too many open parentheses please try again");
+        return false;
+    }
+
+
+}
+
+operation eq_parser(char* string) {
+
+}
+
+bool valid_operation(char* string) {
+
+}
+
+bool valid_eq(char* string) {
+
+}
+
+
+int main() {
+    printf("Enter a valid equation, operators include [ (, ), ^, x, *, /, +, - ]: \n");
+    int i;
+        
+    raw_string = malloc(sizeof(char)*200);
+    scanf("%199s", raw_string);
+
+
+
+    return 0;       
+}
