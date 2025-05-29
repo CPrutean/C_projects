@@ -10,7 +10,7 @@
 static char* raw_string = NULL;
 
 //Initialize character array with the index's showing the precedences each operation by index
-const char val_symb[6] = {'(', ')', '^', 'x', '*', '/', '+', '-'};
+const char val_symb[6] = {'(', ')', '^', 'x', '*', '/', '+', '-', '.'};
 const char val_nums[10] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
 
 typedef struct {
@@ -78,23 +78,35 @@ bool check_errors(char* string) {
     int open_paren = 0;
     int closed_paren = 0;
     int currspaces = 0;
+    bool reading_num = false;
+    bool decimal_point = false;
+
 
     while (*(string+i) != '\0') {
         if (*(string+i) == ' ') {
+            decimal_point = 0;
+            reading_num = false;
             currspaces++;
             continue;
         }
 
-        switch(*(string+i)) {
-            case '(':
-                open_paren++;
-                break;
-            case ')':
-                closed_paren++;
-                break;
-            default:
-               
-                break;         
+        if (*(string+i) == '(') {
+            open_paren++;
+        } else if (*(string+i) == ')') {
+            closed_paren++;
+        } else if (is_num(*(string+i)) && !reading_num) {
+            reading_num = true;
+        } else if (reading_num && *(string+i) == '.') {
+            decimal_point = true;
+        } else if (reading_num && decimal_point && (*(string+i) == '.')) {
+            printf("\n Improper decimal point usage try again");
+            exit(0);
+        } else if (i != 0 && is_oper(*(string+i-1)) && is_oper(*(string+i))) {
+            printf("\nImproper operation placement try again");
+            exit(0);
+        } else if (is_oper(*(string+i))) {
+            reading_num = false;
+            decimal_point = false;
         }
         
     }
@@ -122,8 +134,9 @@ bool valid_eq(char* string) {
 
 int main() {
     printf("Enter a valid equation, operators include [ (, ), ^, x, *, /, +, - ]: \n");
+    printf("\nNote numbers with commas will result in an error");
     int i;
-        
+    
     raw_string = malloc(sizeof(char)*200);
     scanf("%199s", raw_string);
 
