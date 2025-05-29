@@ -2,6 +2,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include "operation.h"
 #define bool char
 #define true 1
 #define false 0
@@ -13,15 +14,8 @@
 const char val_symb[6] = {'(', ')', '^', 'x', '*', '/', '+', '-', '.'};
 const char val_nums[10] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
 static char* raw_string = NULL;
+static int length = 0;
 
-
-typedef struct {
-    char oper;
-    float num1;
-    float num2;
-    operation op1;
-    operation op2;
-} operation;
 
 //Pass an operation with only num1 value set and the operator as '!'
 int factorial(operation op) {
@@ -110,7 +104,8 @@ bool check_errors(char* string) {
             reading_num = false;
             decimal_point = false;
         } else {
-            printf("\nThis character '%c' isnt allowed in our equations try again", *(string+i));
+            printf("\nThis character '%c' isnt allowed in equations try again", *(string+i));
+            exit(0);
         }
         i++;
     }
@@ -119,20 +114,26 @@ bool check_errors(char* string) {
         printf("\n Unclosed/Too many open parentheses please try again");
         return false;
     }
+    length = i;
     return true;
 
 }
 
+float num_parser(char* string, int index1, int index2, bool contains_decimal) {
+    int i = index1;
+    while (i > index2) {
+
+        i++;
+    }
+}
+
+
 operation eq_parser(char* string) {
-
-}
-
-bool valid_operation(char* string) {
-
-}
-
-bool valid_eq(char* string) {
-
+    bool reading_num = false;
+    int index1 = 0;
+    int index2 = 0;
+    bool num_has_decimal = false;
+    
 }
 
 
@@ -145,7 +146,7 @@ int main() {
     scanf("%199s", raw_string);
 
     if (check_errors(raw_string)) {
-        printf("\nNo errors found please try again");
+        printf("\nNo errors found");
     }
 
 
