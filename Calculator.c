@@ -2,16 +2,18 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdlib.h>
-
 #define bool char
 #define true 1
 #define false 0
 
-static char* raw_string = NULL;
+
+
 
 //Initialize character array with the index's showing the precedences each operation by index
 const char val_symb[6] = {'(', ')', '^', 'x', '*', '/', '+', '-', '.'};
 const char val_nums[10] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
+static char* raw_string = NULL;
+
 
 typedef struct {
     char oper;
@@ -44,7 +46,7 @@ int factorial(operation op) {
     return num;
 }
 
-int exp(operation op) {
+int exponent(operation op) {
     if (op.oper != '^') {
         printf("\nInvalid operation passed to exp function");
         return -1;
@@ -84,7 +86,7 @@ bool check_errors(char* string) {
 
     while (*(string+i) != '\0') {
         if (*(string+i) == ' ') {
-            decimal_point = 0;
+            decimal_point = false;
             reading_num = false;
             currspaces++;
             continue;
@@ -107,15 +109,17 @@ bool check_errors(char* string) {
         } else if (is_oper(*(string+i))) {
             reading_num = false;
             decimal_point = false;
+        } else {
+            printf("\nThis character '%c' isnt allowed in our equations try again", *(string+i));
         }
-        
+        i++;
     }
 
     if (open_paren != closed_paren) {
         printf("\n Unclosed/Too many open parentheses please try again");
         return false;
     }
-
+    return true;
 
 }
 
@@ -139,6 +143,11 @@ int main() {
     
     raw_string = malloc(sizeof(char)*200);
     scanf("%199s", raw_string);
+
+    if (check_errors(raw_string)) {
+        printf("\nNo errors found please try again");
+    }
+
 
 
 
