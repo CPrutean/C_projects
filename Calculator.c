@@ -18,7 +18,7 @@ static int length = 0;
 
 
 //Pass an operation with only num1 value set and the operator as '!'
-int factorial(operation op) {
+float factorial(operation op) {
     bool check_whole_num = true;
     if ((int)op.num1-op.num1 != 0) {
         printf("\nDont pass decimal numbers to the factorial function there is no framework for integrals yet");
@@ -40,7 +40,7 @@ int factorial(operation op) {
     return num;
 }
 
-int exponent(operation op) {
+float exponent(operation op) {
     if (op.oper != '^') {
         printf("\nInvalid operation passed to exp function");
         return -1;
@@ -58,7 +58,7 @@ int exponent(operation op) {
     return num;
 }
 
-int paren_parser(char* string, int index1, int index2) {
+float paren_parser(char* string, int index1, int index2) {
 
 }
 bool is_oper(char c) {
@@ -119,7 +119,7 @@ bool check_errors(char* string) {
 
 }
 
-float num_parser(char* string, int index1, int index2, bool contains_decimal) {
+float num_parser(char* string, int index1, int index2, int decimal_index) {
     int i = index1;
     while (i > index2) {
 
@@ -132,8 +132,9 @@ operation eq_parser(char* string) {
     bool reading_num = false;
     int index1 = 0;
     int index2 = 0;
-    bool num_has_decimal = false;
-    
+    //Decimal index will be initialized to -1 if a decimal point doesnt exist
+    int decimal_index = -1;
+
 }
 
 
