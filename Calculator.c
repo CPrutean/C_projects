@@ -165,6 +165,7 @@ float num_parser(char* string, int index1, int index2, int decimal_index) {
 
             if (ind2!=index2) {
                 number += (double)num_from_char(*(string+i))/currmult;
+                ind2++;
             }
             currmult *= 10;
         }
