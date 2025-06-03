@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include "operation.h"
-#define bool char
+#define bool int
 #define true 1
 #define false 0
 
@@ -11,7 +11,7 @@
 
 
 //Initialize character array with the index's showing the precedences each operation by index
-const char val_symb[6] = {'(', ')', '^', 'x', '*', '/', '+', '-', '.'};
+const char val_symb[6] = {'(',')','^','x','*','/','+','-','.'};
 const char val_nums[10] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
 static char* raw_string = NULL;
 static int length = 0;
@@ -61,12 +61,18 @@ float exponent(operation op) {
 float paren_parser(char* string, int index1, int index2) {
 
 }
+
+
 bool is_oper(char c) {
     return (int)c == 42 || (int)c == 47 || (int)c == 94 || (int)c == 120;
 }
 
 bool is_num(char c) {
-    return (int) c >= 49 && (int) c <= 57;
+    if ((int) c >= 49 && (int) c <= 57) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 bool check_errors(char* string) {
@@ -119,22 +125,75 @@ bool check_errors(char* string) {
 
 }
 
+int num_from_char(char c) {
+    switch (c) {
+        case '1':
+            return 1;
+        case '2':
+            return 2;
+        case '3':
+            return 3;
+        case '4':
+            return 4;
+        case '5':
+            return 5;
+        case '6':
+            return 6;
+        case '7': 
+            return 7;
+        case '8':
+            return 8;
+        case '9':
+            return 9;
+        case '0':
+            return 0;
+    }
+}
+
 float num_parser(char* string, int index1, int index2, int decimal_index) {
     int i = index1;
-    while (i > index2) {
+    float number = 0;
+    int currmult = 1;
+    if (decimal_index != -1) {
+        int ind1 = decimal_index-1;
+        int ind2 = decimal_index+1;
+        while (ind1!=index1||ind2!=index2) {
+            if (ind1!=index1) {
+                number += num_from_char(*(string+i))*currmult;
+                ind1--;
+            }
 
-        i++;
+            if (ind2!=index2) {
+                number += (double)num_from_char(*(string+i))/currmult;
+            }
+            currmult *= 10;
+        }
+        return number;
+    } else {
+        int i;
+        for (i = index2; i >= index1; i--) {
+            number += num_from_char(*(string+i))*currmult;
+            currmult*=10;
+        }
+        return number;
     }
 }
 
 
-operation eq_parser(char* string) {
+operation_tree eq_parser(char* string) {
     bool reading_num = false;
     int index1 = 0;
     int index2 = 0;
     //Decimal index will be initialized to -1 if a decimal point doesnt exist
     int decimal_index = -1;
-
+    int i;
+    for (i = 0; i < length; i++) {
+        if (reading_num = false && is_num(*(string+i))) {
+            reading_num = true;
+        } else if (reading_num = true && *(string+i) == '.') {
+            decimal_index = i;
+        }
+    }
 }
 
 
@@ -150,7 +209,7 @@ int main() {
         printf("\nNo errors found");
     }
 
-
+    
 
 
     return 0;       

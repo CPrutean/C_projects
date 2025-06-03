@@ -4,7 +4,7 @@ typedef struct oper {
     float num1;
     float num2;
     char oper;
-}operation;
+} operation;
 
 typedef struct oper_tr{
     operation left;
