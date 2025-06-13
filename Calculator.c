@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include "operation.h"
+
 #define bool int
 #define true 1
 #define false 0
@@ -11,7 +12,7 @@
 
 
 //Initialize character array with the index's showing the precedences each operation by index
-const char val_symb[6] = {'(',')','^','x','*','/','+','-','.'};
+const char val_symb[9] = {'(',')','^','x','*','/','+','-','.'};
 const char val_nums[10] = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
 static char* raw_string = NULL;
 static int length = 0;
@@ -24,8 +25,6 @@ float factorial(operation op) {
         printf("\nDont pass decimal numbers to the factorial function there is no framework for integrals yet");
         exit(0);
     }
-
-
 
     if (op.oper != '!') {
         printf("\nInvalid operation passed to factorial func");
@@ -64,7 +63,7 @@ float paren_parser(char* string, int index1, int index2) {
 
 
 bool is_oper(char c) {
-    return (int)c == 42 || (int)c == 47 || (int)c == 94 || (int)c == 120;
+    return (int)c == 42 || (int)c == 43 || (int)c == 47 || (int)c == 94 || (int)c == 120 || (int)c == 47 || (int)c == 45 || (int)c == 46;
 }
 
 bool is_num(char c) {
@@ -82,7 +81,6 @@ bool check_errors(char* string) {
     int currspaces = 0;
     bool reading_num = false;
     bool decimal_point = false;
-
 
     while (*(string+i) != '\0') {
         if (*(string+i) == ' ') {
@@ -185,15 +183,19 @@ operation_tree eq_parser(char* string) {
     bool reading_num = false;
     int index1 = 0;
     int index2 = 0;
+    char curr_oper;
     //Decimal index will be initialized to -1 if a decimal point doesnt exist
     int decimal_index = -1;
     int i;
-    for (i = 0; i < length; i++) {
+    for (i = 0; i <= length; i++) {
         if (reading_num = false && is_num(*(string+i))) {
             reading_num = true;
+            index1 = i;
         } else if (reading_num = true && *(string+i) == '.') {
             decimal_index = i;
-        }
+        } else if (is_oper(*(string+i))) {
+            curr_oper = *(string+i);
+        }  
     }
 }
 
@@ -211,7 +213,5 @@ int main() {
     }
 
     
-
-
     return 0;       
 }

@@ -9,8 +9,8 @@ typedef struct oper {
 typedef struct oper_tr{
     operation left;
     operation right;
-    float left;
-    float right;
+    float left_n;
+    float right_n;
     char oper;
 } operation_tree;
 #endif

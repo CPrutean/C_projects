@@ -19,6 +19,7 @@ static char* display_string = NULL;
 static char letters_guessed[26];
 static int letters_guessed_index = 0;
 
+
 char Hangman[9][15] = {
   "|-------\n",
   "|      ^\n",
