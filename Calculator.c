@@ -39,6 +39,7 @@ float factorial(operation op) {
     return num;
 }
 
+//Returns a float with the operation passed to decode
 float exponent(operation op) {
     if (op.oper != '^') {
         printf("\nInvalid operation passed to exp function");
@@ -57,15 +58,17 @@ float exponent(operation op) {
     return num;
 }
 
-float paren_parser(char* string, int index1, int index2) {
+//Solves the equation within the parentheses.
+float paren_parser(char* string, int* indexes, int nested) {
 
 }
 
-
+//Returns if a character passed is a valid operation
 bool is_oper(char c) {
     return (int)c == 42 || (int)c == 43 || (int)c == 47 || (int)c == 94 || (int)c == 120 || (int)c == 47 || (int)c == 45 || (int)c == 46;
 }
 
+//Checks if the character passed is a valid number
 bool is_num(char c) {
     if ((int) c >= 49 && (int) c <= 57) {
         return true;
@@ -74,6 +77,7 @@ bool is_num(char c) {
     }
 }
 
+//Checks for certain intial errors found in writing the equations such as invalid characters
 bool check_errors(char* string) {
     int i = 0;
     int open_paren = 0;
@@ -123,6 +127,7 @@ bool check_errors(char* string) {
 
 }
 
+//Returns a number for the character passed to it.
 int num_from_char(char c) {
     switch (c) {
         case '1':
@@ -148,6 +153,7 @@ int num_from_char(char c) {
     }
 }
 
+//Returns the number from the string representation passed to it
 float num_parser(char* string, int index1, int index2, int decimal_index) {
     int i = index1;
     float number = 0;
@@ -155,13 +161,13 @@ float num_parser(char* string, int index1, int index2, int decimal_index) {
     if (decimal_index != -1) {
         int ind1 = decimal_index-1;
         int ind2 = decimal_index+1;
-        while (ind1!=index1||ind2!=index2) {
-            if (ind1!=index1) {
+        while (ind1!=index1-1||ind2!=index2+1) {
+            if (ind1 != index1-1) {
                 number += num_from_char(*(string+i))*currmult;
                 ind1--;
             }
 
-            if (ind2!=index2) {
+            if (ind2!=index2+1) {
                 number += (double)num_from_char(*(string+i))/currmult;
                 ind2++;
             }
@@ -178,25 +184,9 @@ float num_parser(char* string, int index1, int index2, int decimal_index) {
     }
 }
 
-
+//Passes and creates an operation tree to be solved later.
 operation_tree eq_parser(char* string) {
-    bool reading_num = false;
-    int index1 = 0;
-    int index2 = 0;
-    char curr_oper;
-    //Decimal index will be initialized to -1 if a decimal point doesnt exist
-    int decimal_index = -1;
-    int i;
-    for (i = 0; i <= length; i++) {
-        if (reading_num = false && is_num(*(string+i))) {
-            reading_num = true;
-            index1 = i;
-        } else if (reading_num = true && *(string+i) == '.') {
-            decimal_index = i;
-        } else if (is_oper(*(string+i))) {
-            curr_oper = *(string+i);
-        }  
-    }
+    
 }
 
 

@@ -6,11 +6,11 @@ typedef struct oper {
     char oper;
 } operation;
 
-typedef struct oper_tr{
-    operation left;
-    operation right;
-    float left_n;
-    float right_n;
+typedef struct oper_tr {
+    operation* left;
+    operation* right;
+    float num_left;
+    float num_right;
     char oper;
 } operation_tree;
 #endif

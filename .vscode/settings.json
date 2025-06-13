@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "calculator": "c"
+        "calculator": "c",
+        "cstdlib": "c"
     }
 }
